@@ -42,12 +42,13 @@ class InstrumentController extends Controller
      */
     public function store(Request $request)
     {
+
         $categories = Category::all();
         $request->validate([
             'model' => 'required', 'brand' => 'required', 'quantity' => 'required', 'category_id' => 'required'
         ]);
         Instrument::create([
-            'model' => $request->model, 'brand' => $request->brand, 'quantity' => $request->quantity, 'category_id' =>$request->category_id
+            'model' => $request->model, 'brand' => $request->brand, 'quantity' => $request->quantity, 'category_id' => $request->category_id
         ]);
         return redirect()->route('instruments.index')->with('categories', $categories)->with('success', 'Item created successfully!');
     }
@@ -70,8 +71,8 @@ class InstrumentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Instrument $instrument)
-    {
-        return view('instruments.edit')->with('instrument', $instrument);
+    {   $categories = Category::all();
+        return view('instruments.edit')->with('instrument', $instrument)->with('categories', $categories);
     }
 
     /**
@@ -83,13 +84,15 @@ class InstrumentController extends Controller
      */
     public function update(Request $request, Instrument $instrument)
     {
+
         $request->validate(['model' => 'required', 'brand' => 'required']);
         $instrument->update([
             'model' => $request->model,
             'brand' => $request->brand,
-            'quantity' => $request->quantity
+            'quantity' => $request->quantity,
+            'category_id' => $request->category_id
         ]);
-        return redirect('/cars')
+        return redirect('/instruments')
             ->with('success', 'Item updated successfully!');
     }
 

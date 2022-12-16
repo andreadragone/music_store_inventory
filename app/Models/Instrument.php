@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Instrument extends Model
 {
     use HasFactory;
-    protected $fillable = ['model', 'brand','quantity','category_id'];
+    protected $fillable = ['model', 'brand','quantity','category_id', 'image'];
 
     public function category() 	{
         return $this->belongsTo('App\Models\Instrument');
